@@ -49,11 +49,24 @@ class DatabaseSetup:
         """)
 
         # Insert default AddUserComponent if not exists
-        cursor.execute("""
-            INSERT OR IGNORE INTO ComponentLookup 
-            (ComponentName, PythonFile, Description) 
+        cursor.execute(
+            """
+            INSERT OR IGNORE INTO ComponentLookup
+            (ComponentName, PythonFile, Description)
             VALUES (?, ?, ?)
-        """, ("AddUserComponent", "AddUserComponent.py", "Adds new users to the database"))
+            """,
+            ("AddUserComponent", "AddUserComponent.py", "Adds new users to the database"),
+        )
+
+        # Insert default SQLQueryTool if not exists
+        cursor.execute(
+            """
+            INSERT OR IGNORE INTO ToolLookup
+            (ToolName, PythonFile, Description)
+            VALUES (?, ?, ?)
+            """,
+            ("SQLQueryTool", "SQLQueryTool.py", "Executes SQL queries and returns formatted results"),
+        )
 
         conn.commit()
         conn.close()
